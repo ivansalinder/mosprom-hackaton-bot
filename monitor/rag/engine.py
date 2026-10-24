@@ -1,13 +1,13 @@
-import json
-from pathlib import Path
-from typing import Dict, Any, List
+﻿import json
+from typing import Any, Dict, List
+
 import numpy as np
-from openai import AsyncOpenAI
-from monitor.config import settings, get_llm_client
+
+from monitor.config import get_llm_client, settings
 from monitor.rag.indexer import DocumentIndexer
 
 
-SYSTEM_PROMPT_RAG = """Ты — «Корсик», корпоративный ИИ-ассистент по адаптации персонала ООО «Группа ПОЛИПЛАСТИК» в мессенджере «МАКС».
+SYSTEM_PROMPT_RAG = """Ты — «Корсик», корпоративный ИИ-ассистент по адаптации персонала ООО «Группа ПОЛИПЛАСТИК» в мессенджере «МАКС». 
 Твоя задача — помогать новым сотрудникам быстро находить точные ответы по регламентам компании.
 
 СТРОГИЕ ПРАВИЛА БЕЗОПАСНОСТИ (КОНТРОЛЬ ГАЛЛЮЦИНАЦИЙ):
@@ -21,7 +21,7 @@ SYSTEM_PROMPT_RAG = """Ты — «Корсик», корпоративный И�
 class RAGEngine:
     def __init__(self) -> None:
         self.client = get_llm_client()
-        self.index_path = Path(settings.RAG_INDEX_PATH)
+        self.index_path = settings.resolved_rag_index_path
         self.chunks: List[Dict[str, Any]] = []
 
     async def ensure_loaded(self) -> None:
@@ -40,11 +40,9 @@ class RAGEngine:
                 "confidence": 0.0,
             }
 
-        # 1. Получаем эмбеддинг запроса
         emb_resp = await self.client.embeddings.create(model=settings.EMBEDDING_MODEL, input=[query])
         q_vec = np.array(emb_resp.data[0].embedding, dtype=np.float32)
 
-        # 2. Косинусная близость с чанками
         scored = []
         for chunk in self.chunks:
             c_vec = np.array(chunk["embedding"], dtype=np.float32)
@@ -56,7 +54,6 @@ class RAGEngine:
         top_matches = scored[:3]
         best_score = top_matches[0][0] if top_matches else 0.0
 
-        # Проверка порога уверенности (защита от галлюцинаций)
         if best_score < settings.RAG_SIMILARITY_THRESHOLD:
             return {
                 "answer": (
@@ -70,10 +67,9 @@ class RAGEngine:
             }
 
         context_text = "\n\n---\n\n".join(
-            [f"Источник: {c['source']} (стр. {c['page']})\nТекст: {c['text']}" for s, c in top_matches]
+            [f"Источник: {c['source']} (стр. {c['page']})\nТекст: {c['text']}" for _, c in top_matches]
         )
 
-        # 3. Генерация ответа со строгим ограничением контекста
         completion = await self.client.chat.completions.create(
             model=settings.LLM_MODEL,
             temperature=0.0,

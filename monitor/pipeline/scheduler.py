@@ -1,9 +1,11 @@
-import json
+﻿import json
 from datetime import date
+
 import aiosqlite
-from monitor.config import settings
-from monitor.bot.delivery import MaxMessengerClient
+
 from monitor.alerts.alert_agent import AlertEscalationAgent
+from monitor.bot.delivery import MaxMessengerClient
+from monitor.config import settings
 
 
 class OnboardingScheduler:
@@ -16,7 +18,7 @@ class OnboardingScheduler:
         sent_count = 0
         today = date.today()
 
-        async with aiosqlite.connect(settings.SQLITE_DB_PATH) as db:
+        async with aiosqlite.connect(str(settings.resolved_sqlite_db_path)) as db:
             db.row_factory = aiosqlite.Row
             emp_cursor = await db.execute("SELECT * FROM employees WHERE is_active = 1")
             employees = await emp_cursor.fetchall()
@@ -35,7 +37,6 @@ class OnboardingScheduler:
                 templates = await tmpl_cursor.fetchall()
 
                 for tmpl in templates:
-                    # Проверяем, не отправляли ли уже этот шаг
                     chk = await db.execute(
                         "SELECT 1 FROM sent_triggers WHERE employee_id = ? AND template_id = ?",
                         (emp["id"], tmpl["id"]),
@@ -57,7 +58,6 @@ class OnboardingScheduler:
                     )
                     sent_count += 1
 
-                    # Если ключевая точка (7 дней или 30 дней) — пуш руководителю подразделения (Роль 03)
                     if days_since_hire in (7, 30, 85) and emp["manager_max_id"]:
                         await self.alerts.notify_department_manager(
                             manager_max_id=emp["manager_max_id"],

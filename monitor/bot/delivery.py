@@ -1,5 +1,7 @@
-from typing import List, Dict, Any, Optional
+﻿from typing import Any, Dict, List, Optional
+
 import httpx
+
 from monitor.config import settings
 
 
@@ -8,8 +10,9 @@ class MaxMessengerClient:
 
     def __init__(self) -> None:
         self.base_url = settings.MAX_API_BASE_URL.rstrip("/")
+        token = (settings.MAX_BOT_TOKEN or "").strip()
         self.headers = {
-            "Authorization": f"Bearer {settings.MAX_BOT_TOKEN}",
+            "Authorization": f"Bearer {token}" if token else "",
             "Content-Type": "application/json",
         }
 

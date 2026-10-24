@@ -1,20 +1,25 @@
-import json
+﻿import json
 from pathlib import Path
-from typing import List, Dict, Any
-import numpy as np
+from typing import Any, Dict, List
+
 from pypdf import PdfReader
-from openai import AsyncOpenAI
-from monitor.config import settings, get_llm_client
+
+from monitor.config import get_llm_client, settings
 
 
 class DocumentIndexer:
     def __init__(self) -> None:
         self.client = get_llm_client()
-        self.index_path = Path(settings.RAG_INDEX_PATH)
-        self.docs_dir = Path(settings.DOCS_DIR)
+        self.index_path = settings.resolved_rag_index_path
+        self.docs_dir = settings.resolved_docs_dir
         self.docs_dir.mkdir(parents=True, exist_ok=True)
 
-    def _extract_chunks_from_pdf(self, pdf_path: Path, chunk_size: int = 900, overlap: int = 150) -> List[Dict[str, Any]]:
+    def _extract_chunks_from_pdf(
+        self,
+        pdf_path: Path,
+        chunk_size: int = 900,
+        overlap: int = 150,
+    ) -> List[Dict[str, Any]]:
         reader = PdfReader(str(pdf_path))
         chunks: List[Dict[str, Any]] = []
         for page_num, page in enumerate(reader.pages, start=1):
@@ -43,7 +48,6 @@ class DocumentIndexer:
             all_chunks.append({"source": txt_file.name, "page": 1, "text": text[:1500]})
 
         if not all_chunks:
-            # Предзаполненные базовые факты из ПВТР П 3.11-07 Группы ПОЛИПЛАСТИК на случай пустой папки
             all_chunks = self._get_default_polyplastic_pvtr_chunks()
 
         texts = [c["text"] for c in all_chunks]

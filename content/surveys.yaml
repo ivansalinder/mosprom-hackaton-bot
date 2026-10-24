@@ -1,0 +1,88 @@
+day3:
+  point: "День 3"
+  completion_text_id: D3_end
+  questions:
+    - id: paperwork
+      text_id: D3_Q1
+      type: single
+      options: ["А) Все отлично!", "Б) Остались вопросы", "В) Возникли трудности с документами"]
+      followups:
+        1: {text_id: D3_Q1_b, help: contact}
+        2: {text_id: D3_Q1_c, help: both}
+    - id: colleagues
+      text_id: D3_Q2
+      type: single
+      options: ["А) Отлично!", "Б) Пока присматриваюсь", "В) Никак, все заняты"]
+      followups:
+        2: {text_id: D3_Q2_c, help: both}
+    - id: tasks
+      text_id: D3_Q3
+      type: single
+      options: ["А) Да, все понятно!", "Б) Жду разъяснений от руководителя", "В) Пока ничего не понял"]
+      followups:
+        0: {text_id: D3_Q3_a}
+        1: {text_id: D3_Q3_b, help: contact}
+        2: {text_id: D3_Q3_c, help: both}
+2weeks:
+  point: "2 недели"
+  completion_text_id: common_thanks
+  questions:
+    - {id: tasks, text_id: W2_Q1, type: yesno}
+    - {id: information, text_id: W2_Q2, type: yesno}
+    - {id: manager_access, text_id: W2_Q3, type: scale10}
+    - {id: manager_feedback, text_id: W2_Q4, type: scale10}
+    - {id: colleagues_support, text_id: W2_Q5, type: scale10}
+    - {id: equipment, text_id: W2_Q6, type: scale10}
+    - {id: access_speed, text_id: W2_Q7, type: scale10}
+    - {id: hr_support, text_id: W2_Q8, type: scale10}
+    - {id: hiring_support, text_id: W2_Q9, type: scale10}
+2months:
+  point: "2 месяца"
+  completion_text_id: M17_thanks
+  questions:
+    - id: mood
+      text_id: M17_Q1
+      type: single
+      options: ["С отличным! Мне все нравится!", "С безразличным: поработал и ушел", "Уже устал, а задачи все валятся"]
+      followups:
+        1: {text_id: M17_A1_b, help: both}
+        2: {text_id: M17_A1_c, help: both}
+    - id: support
+      text_id: M17_Q2
+      type: multi
+      options: ["Руководитель", "Коллеги", "Рекрутер", "Никто!"]
+      followups:
+        3: {text_id: M17_A2_d, help: both}
+    - id: improvement
+      text_id: M17_Q3
+      type: multi
+      options: ["Удаленный формат работы", "Более четкие задачи", "Автоматизация процессов", "Помощь коллег", "Свой вариант"]
+      exclude_options:
+        GTP: ["Удаленный формат работы"]
+      other_option: "Свой вариант"
+end:
+  point: "Конец ИС"
+  questions:
+    - id: hardest
+      text_id: F_Q1
+      type: single
+      options: ["А) Со всем справился", "Б) Коммуникации с другими отделами", "В) Нечеткие задачи", "Г) Другое"]
+      other_option: "Г) Другое"
+    - id: stay
+      text_id: F_Q2
+      type: single
+      options: ["А) Да, однозначно!", "Б) Не уверен", "В) Нет, задумываюсь об уходе"]
+      followups:
+        0: {text_id: F_Q2_a}
+        1: {text_id: F_Q2_b, wait_for_reason: true}
+        2: {text_id: F_Q2_c, wait_for_reason: true}
+    - {id: workload, text_id: F_S1, type: scale10}
+    - {id: expectations, text_id: F_S2, type: scale10}
+    - {id: information, text_id: F_S3, type: yesno}
+    - {id: manager_access, text_id: F_S4, type: scale10}
+    - {id: manager_feedback, text_id: F_S5, type: scale10}
+    - {id: colleagues, text_id: F_S6, type: scale10}
+    - {id: departments, text_id: F_S7, type: scale10}
+    - {id: hr_support, text_id: F_S8, type: scale10}
+    - {id: tasks, text_id: F_S9, type: scale10}
+    - {id: recommendation, text_id: F_Q3, type: open}

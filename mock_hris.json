@@ -1,0 +1,80 @@
+[
+  {
+    "employee_id": "E-0001",
+    "binding_code": "яблоко",
+    "full_name": "Иван",
+    "site": "GrPP",
+    "employee_category": "office",
+    "is_office": true,
+    "department": "Демо-офис GrPP",
+    "manager_id": "demo-manager-grpp",
+    "recruiter": "Демо-рекрутер",
+    "hire_date": "2026-10-27",
+    "probation_end_date": "2027-01-26"
+  },
+  {
+    "employee_id": "E-0002",
+    "binding_code": "груша",
+    "full_name": "Мария",
+    "site": "GTP",
+    "employee_category": "production",
+    "is_office": false,
+    "department": "Демо-производство GTP",
+    "manager_id": "demo-manager-gtp",
+    "recruiter": "Демо-рекрутер",
+    "hire_date": "2026-10-27",
+    "probation_end_date": "2027-01-26"
+  },
+  {
+    "employee_id": "E-0003",
+    "binding_code": "слива",
+    "full_name": "Алексей",
+    "site": "Luzhniki",
+    "employee_category": "office",
+    "is_office": true,
+    "department": "Демо-офис Luzhniki",
+    "manager_id": "demo-manager-luzhniki",
+    "recruiter": "Демо-рекрутер",
+    "hire_date": "2026-10-27",
+    "probation_end_date": "2027-01-26"
+  },
+  {
+    "employee_id": "E-0004",
+    "binding_code": "лимон",
+    "full_name": "Ольга",
+    "site": "GTP",
+    "employee_category": "office",
+    "is_office": true,
+    "department": "Демо-офис GTP",
+    "manager_id": "demo-manager-gtp",
+    "recruiter": "Демо-рекрутер",
+    "hire_date": "2026-10-27",
+    "probation_end_date": "2027-01-26"
+  },
+  {
+    "employee_id": "E-0005",
+    "binding_code": "вишня",
+    "full_name": "Дмитрий",
+    "site": "GrPP",
+    "employee_category": "production",
+    "is_office": false,
+    "department": "Демо-производство GrPP",
+    "manager_id": "demo-manager-grpp-prod",
+    "recruiter": "Демо-рекрутер",
+    "hire_date": "2026-10-27",
+    "probation_end_date": "2027-01-26"
+  },
+  {
+    "employee_id": "E-0006",
+    "binding_code": "персик",
+    "full_name": "Елена",
+    "site": "Luzhniki",
+    "employee_category": "production",
+    "is_office": false,
+    "department": "Демо-производство Luzhniki",
+    "manager_id": "demo-manager-luzhniki-prod",
+    "recruiter": "Демо-рекрутер",
+    "hire_date": "2026-10-27",
+    "probation_end_date": "2027-01-26"
+  }
+]

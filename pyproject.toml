@@ -16,7 +16,13 @@ dependencies = [
     "pypdf>=5.0.0",
     "openpyxl>=3.1.5",
     "python-multipart>=0.0.12",
+    "maxapi",
+    "PyYAML>=6.0.2",
+    "python-dateutil>=2.8.2",
 ]
+
+[tool.uv.sources]
+maxapi = { path = "../maxapi" }
 
 [tool.setuptools]
 packages = ["monitor"]

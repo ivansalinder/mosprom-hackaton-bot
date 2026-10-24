@@ -1,6 +1,6 @@
-import aiosqlite
-from openai import AsyncOpenAI
-from monitor.config import settings, get_llm_client
+﻿import aiosqlite
+
+from monitor.config import get_llm_client, settings
 
 
 class DigestSummarizer:
@@ -8,7 +8,7 @@ class DigestSummarizer:
         self.client = get_llm_client()
 
     async def build_weekly_hr_digest(self) -> str:
-        async with aiosqlite.connect(settings.SQLITE_DB_PATH) as db:
+        async with aiosqlite.connect(str(settings.resolved_sqlite_db_path)) as db:
             db.row_factory = aiosqlite.Row
             cursor = await db.execute(
                 """

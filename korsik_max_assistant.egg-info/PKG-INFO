@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: korsik-max-assistant
+Version: 0.2.0
+Summary: ИИ-ассистент в мессенджере МАКС для адаптации персонала Группы ПОЛИПЛАСТИК
+Requires-Python: >=3.11
+Requires-Dist: fastapi>=0.115.0
+Requires-Dist: uvicorn[standard]>=0.30.0
+Requires-Dist: httpx>=0.27.0
+Requires-Dist: pydantic>=2.9.0
+Requires-Dist: pydantic-settings>=2.5.0
+Requires-Dist: apscheduler>=3.10.4
+Requires-Dist: aiosqlite>=0.20.0
+Requires-Dist: openai>=1.50.0
+Requires-Dist: numpy>=1.26.0
+Requires-Dist: pypdf>=5.0.0
+Requires-Dist: openpyxl>=3.1.5
+Requires-Dist: python-multipart>=0.0.12

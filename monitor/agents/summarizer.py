@@ -1,11 +1,11 @@
 import aiosqlite
 from openai import AsyncOpenAI
-from monitor.config import settings
+from monitor.config import settings, get_llm_client
 
 
 class DigestSummarizer:
     def __init__(self) -> None:
-        self.client = AsyncOpenAI(api_key=settings.LLM_API_KEY, base_url=settings.LLM_BASE_URL)
+        self.client = get_llm_client()
 
     async def build_weekly_hr_digest(self) -> str:
         async with aiosqlite.connect(settings.SQLITE_DB_PATH) as db:

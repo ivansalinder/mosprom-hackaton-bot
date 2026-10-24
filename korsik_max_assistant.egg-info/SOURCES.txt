@@ -1,0 +1,8 @@
+pyproject.toml
+korsik_max_assistant.egg-info/PKG-INFO
+korsik_max_assistant.egg-info/SOURCES.txt
+korsik_max_assistant.egg-info/dependency_links.txt
+korsik_max_assistant.egg-info/requires.txt
+korsik_max_assistant.egg-info/top_level.txt
+monitor/config.py
+monitor/db.py

@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Dict, Any, List
 import numpy as np
 from openai import AsyncOpenAI
-from monitor.config import settings
+from monitor.config import settings, get_llm_client
 from monitor.rag.indexer import DocumentIndexer
 
 
@@ -20,7 +20,7 @@ SYSTEM_PROMPT_RAG = """Ты — «Корсик», корпоративный И�
 
 class RAGEngine:
     def __init__(self) -> None:
-        self.client = AsyncOpenAI(api_key=settings.LLM_API_KEY, base_url=settings.LLM_BASE_URL)
+        self.client = get_llm_client()
         self.index_path = Path(settings.RAG_INDEX_PATH)
         self.chunks: List[Dict[str, Any]] = []
 

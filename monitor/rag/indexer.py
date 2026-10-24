@@ -4,12 +4,12 @@ from typing import List, Dict, Any
 import numpy as np
 from pypdf import PdfReader
 from openai import AsyncOpenAI
-from monitor.config import settings
+from monitor.config import settings, get_llm_client
 
 
 class DocumentIndexer:
     def __init__(self) -> None:
-        self.client = AsyncOpenAI(api_key=settings.LLM_API_KEY, base_url=settings.LLM_BASE_URL)
+        self.client = get_llm_client()
         self.index_path = Path(settings.RAG_INDEX_PATH)
         self.docs_dir = Path(settings.DOCS_DIR)
         self.docs_dir.mkdir(parents=True, exist_ok=True)

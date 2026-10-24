@@ -1,7 +1,7 @@
 import json
 from typing import Dict, Any
 from openai import AsyncOpenAI
-from monitor.config import settings
+from monitor.config import settings, get_llm_client
 
 NLU_SYSTEM_PROMPT = """Ты — NLP-модуль эмоционального интеллекта (Sentiment Analysis) HR-платформы Группы ПОЛИПЛАСТИК.
 Проанализируй сообщение нового сотрудника (ответ на пульс-опрос или обращение в бот) и верни строго JSON:
@@ -16,7 +16,7 @@ NLU_SYSTEM_PROMPT = """Ты — NLP-модуль эмоционального и
 
 class SentimentNLUAgent:
     def __init__(self) -> None:
-        self.client = AsyncOpenAI(api_key=settings.LLM_API_KEY, base_url=settings.LLM_BASE_URL)
+        self.client = get_llm_client()
 
     async def analyze_message(self, text: str) -> Dict[str, Any]:
         try:

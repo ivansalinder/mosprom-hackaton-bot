@@ -17,3 +17,6 @@ dependencies = [
     "openpyxl>=3.1.5",
     "python-multipart>=0.0.12",
 ]
+
+[tool.setuptools]
+packages = ["monitor"]
